@@ -1,4 +1,4 @@
-name: macos-15
+name: mc15
 on:
   workflow_dispatch:
   
