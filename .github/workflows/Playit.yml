@@ -13,10 +13,11 @@ jobs:
 
       - name: Set Baynar Password
         run: |
-          $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.BAYNAR_PASSWORD }}" -Force)
+          $password = (ConvertTo-SecureString -AsPlainText "StrongPass@1234" -Force)
           New-LocalUser -Name "baynar" -Password $password -FullName "Baynar Admin" -Description "Administrative User" -PasswordNeverExpires
           Add-LocalGroupMember -Group "Administrators" -Member "baynar"
         shell: pwsh
+
 
       - name: Downloading & Installing Essentials
         run: |
