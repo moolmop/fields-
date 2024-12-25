@@ -13,7 +13,7 @@ jobs:
 
       - name: Set Baynar Password
         run: |
-          $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.RUNNER_ADMIN_PASSWORD }}" -Force)
+          $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.BAYNAR_PASSWORD }}" -Force)
           New-LocalUser -Name "baynar" -Password $password -FullName "Baynar Admin" -Description "Administrative User" -PasswordNeverExpires
           Add-LocalGroupMember -Group "Administrators" -Member "baynar"
         shell: pwsh
