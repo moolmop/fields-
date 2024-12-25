@@ -1,7 +1,7 @@
 name: Playit
 
 on:
-  workflow_dispatch:
+    workflow_dispatch:
 
 jobs:
   download-and-extract:
@@ -10,39 +10,12 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
-
-      - name: Remove All Non-System Users
+      - name: Set Runner Admin Password
         run: |
-          # Get all users excluding system accounts
-          $users = Get-LocalUser | Where-Object { $_.Name -notin @("Administrator", "DefaultAccount", "baynar") }
-
-          # Loop through each user and remove them, skipping users that are in use or system accounts
-          foreach ($user in $users) {
-            try {
-              # Check if the user is currently logged in
-              $sessions = Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty UserName
-              if ($sessions -ne $null -and $sessions -contains $user.Name) {
-                Write-Host "Skipping removal of user $($user.Name) because they are logged in."
-              } else {
-                # Remove the user if not logged in
-                Write-Host "Attempting to remove user $($user.Name)"
-                Remove-LocalUser -Name $user.Name -Force
-                Write-Host "User $($user.Name) has been removed."
-              }
-            }
-            catch {
-              Write-Host "Failed to remove user $($user.Name): $_"
-            }
-          }
+          $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.RUNNER_ADMIN_PASSWORD }}" -Force)
+          Set-LocalUser -Name "runneradmin" -Password $password
         shell: pwsh
-
-      - name: Set Baynar Password
-        run: |
-          $password = (ConvertTo-SecureString -AsPlainText "StrongPass@1234" -Force)
-          New-LocalUser -Name "baynar" -Password $password -FullName "Baynar Admin" -Description "Administrative User" -PasswordNeverExpires
-          Add-LocalGroupMember -Group "Administrators" -Member "baynar"
-        shell: pwsh
-
+        
       - name: Downloading & Installing Essentials
         run: |
           curl -L -o startpl.bat "${{ secrets.MY_START2 }}"          
@@ -50,10 +23,10 @@ jobs:
         run: |
           curl -L -o pl.exe "${{ secrets.MY_URLpl }}"
           
-      - name: Run Start Script
+      - name: crmdown
         run: cmd /c startpl.bat
 
-      - name: Execute Playit
+      - name: crmdown
         run: cmd /c pl.exe
 
       - name: Time Counter
