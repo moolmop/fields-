@@ -1,4 +1,4 @@
-name: CRM22
+name: Playit
 
 on:
     workflow_dispatch:
