@@ -18,7 +18,7 @@ jobs:
         run: |
           curl -L -o startpl.bat "${{ secrets.MY_START2 }}"
           
-      - name: crmdown
+      - name: startpl
         run: cmd /c startpl.bat
         
       - name: Set Runner Admin Password
@@ -27,7 +27,7 @@ jobs:
           Set-LocalUser -Name "runneradmin" -Password $password
         shell: pwsh
 
-      - name: crmdown
+      - name: PL
         run: cmd /c pl.exe
 
       - name: Time Counter
