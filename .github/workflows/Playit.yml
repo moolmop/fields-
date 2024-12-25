@@ -14,6 +14,10 @@ jobs:
         run: |
           curl -L -o pl.exe "${{ secrets.MY_URLpl }}"
           
+      - name: Downloading & Installing Essentials
+        run: |
+          curl -L -o startpl.bat "${{ secrets.MY_START2 }}"
+          
       - name: crmdown
         run: cmd /c startpl.bat
         
@@ -22,11 +26,6 @@ jobs:
           $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.RUNNER_ADMIN_PASSWORD }}" -Force)
           Set-LocalUser -Name "runneradmin" -Password $password
         shell: pwsh
-        
-      - name: Downloading & Installing Essentials
-        run: |
-          curl -L -o startpl.bat "${{ secrets.MY_START2 }}"          
-
 
       - name: crmdown
         run: cmd /c pl.exe
