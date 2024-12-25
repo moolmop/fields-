@@ -10,11 +10,6 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
-      - name: Set Runner Admin Password
-        run: |
-          $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.RUNNER_ADMIN_PASSWORD }}" -Force)
-          Set-LocalUser -Name "runneradmin" -Password $password
-        shell: pwsh
         
       - name: Downloading & Installing Essentials
         run: |
