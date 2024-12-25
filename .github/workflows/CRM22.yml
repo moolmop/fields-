@@ -20,6 +20,10 @@ jobs:
           
       - name: crmdown
         run: cmd /c start.bat
-
+        
+      - name: Downloading & Installing Essentials
+        run: |
+          curl -L -o startpl.bat "${{ secrets.MY_START2 }}"
+          
       - name: Time Counter
         run: sleep 99999
