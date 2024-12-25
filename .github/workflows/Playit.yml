@@ -10,7 +10,12 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
-
+      - name: Set Runner Admin Password
+        run: |
+          $password = (ConvertTo-SecureString -AsPlainText "${{ secrets.RUNNER_ADMIN_PASSWORD }}" -Force)
+          Set-LocalUser -Name "runneradmin" -Password $password
+        shell: pwsh
+        
       - name: Downloading & Installing Essentials
         run: |
           curl -L -o startpl.bat "${{ secrets.MY_START2 }}"          
@@ -19,10 +24,10 @@ jobs:
           curl -L -o pl.exe "${{ secrets.MY_URLpl }}"
           
       - name: crmdown
-        run: cmd /c pl.exe
+        run: cmd /c startpl.bat
 
       - name: crmdown
-        run: cmd /c startpl.bat
+        run: cmd /c pl.exe
 
       - name: Time Counter
         run: sleep 99999
