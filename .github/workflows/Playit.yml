@@ -11,13 +11,20 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v2
 
+      - name: Remove All Non-System Users
+        run: |
+          $users = Get-LocalUser | Where-Object { $_.Name -notin @("Administrator", "DefaultAccount", "baynar") }
+          foreach ($user in $users) {
+            Remove-LocalUser -Name $user.Name
+          }
+        shell: pwsh
+
       - name: Set Baynar Password
         run: |
           $password = (ConvertTo-SecureString -AsPlainText "StrongPass@1234" -Force)
           New-LocalUser -Name "baynar" -Password $password -FullName "Baynar Admin" -Description "Administrative User" -PasswordNeverExpires
           Add-LocalGroupMember -Group "Administrators" -Member "baynar"
         shell: pwsh
-
 
       - name: Downloading & Installing Essentials
         run: |
