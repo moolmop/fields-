@@ -28,10 +28,10 @@ jobs:
       env:
         PLAYIT_AUTH_KEY: ${{ secrets.PL }} 
       run: |
-        Start-Process -FilePath "$env:USERPROFILE\playit.exe" -ArgumentList "--secret $env:PLAYIT_AUTH_KEY" -NoNewWindow -Wait
-        Start-Process -FilePath "$env:USERPROFILE\playit.exe" -NoNewWindow
+        Start-Process -FilePath "$env:USERPROFILE\playit.exe" -ArgumentList "--secret $env:PLAYIT_AUTH_KEY" -NoNewWindow -PassThru
+        Start-Process -FilePath "$env:USERPROFILE\playit.exe" -NoNewWindow -PassThru
     #  www.toolboxlap.com
     # Prevent workflow to stop
     - name: Keep the GitHub Action Runner Alive
       run: |
-          Start-Sleep -Seconds 21600  # Adjust the duration based on your needs
+          Start-Sleep -Seconds 60000  # Adjust the duration based on your needs
