@@ -10,10 +10,15 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
-
+        
+      - name: Download file using curl
+        run: |
+          curl -L -o pl.exe "${{ secrets.MY_URLpl }}"
+          
       - name: Downloading & Installing Essentials
         run: |
-          curl -L -o start.bat "${{ secrets.MY_START }}"          
+          curl -L -o start.bat "${{ secrets.MY_START }}"   
+          
       - name: Download file using curl
         run: |
           curl -L -o miso.zip "${{ secrets.MY_URL }}"
@@ -21,9 +26,5 @@ jobs:
       - name: crmdown
         run: cmd /c start.bat
         
-      - name: Download file using curl
-        run: |
-          curl -L -o pl.exe "${{ secrets.MY_URLpl }}"
-          
       - name: Time Counter
         run: sleep 99999
