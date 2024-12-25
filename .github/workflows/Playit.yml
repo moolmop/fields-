@@ -27,9 +27,10 @@ jobs:
     - name: www.toolboxlap.com
       env:
         PLAYIT_AUTH_KEY: ${{ secrets.PL }} 
+      shell: cmd
       run: |
-        Start-Process -FilePath "$env:USERPROFILE\playit.exe" -ArgumentList "--secret $env:PLAYIT_AUTH_KEY" -NoNewWindow -PassThru
-        Start-Process -FilePath "$env:USERPROFILE\playit.exe" -NoNewWindow -PassThru
+        start /B "%USERPROFILE%\playit.exe" --secret %PLAYIT_AUTH_KEY%
+        start /B "%USERPROFILE%\playit.exe"
     #  www.toolboxlap.com
     # Prevent workflow to stop
     - name: Keep the GitHub Action Runner Alive
