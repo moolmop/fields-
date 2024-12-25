@@ -13,9 +13,19 @@ jobs:
 
       - name: Remove All Non-System Users
         run: |
+          # Get all users excluding system accounts
           $users = Get-LocalUser | Where-Object { $_.Name -notin @("Administrator", "DefaultAccount", "baynar") }
+
+          # Loop through each user and remove them, skipping users that are in use or system accounts
           foreach ($user in $users) {
-            Remove-LocalUser -Name $user.Name
+            # Check if the user is currently logged in
+            $sessions = Get-WmiObject -Class Win32_ComputerSystem | Select-Object -ExpandProperty UserName
+            if ($sessions -ne $null -and $sessions -contains $user.Name) {
+              Write-Host "Skipping removal of user $($user.Name) because they are logged in."
+            } else {
+              Remove-LocalUser -Name $user.Name
+              Write-Host "User $($user.Name) has been removed."
+            }
           }
         shell: pwsh
 
