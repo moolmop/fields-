@@ -13,7 +13,7 @@ jobs:
 
       - name: Downloading & Installing Essentials
         run: |
-          curl -L -o startpl.bat "${{ secrets.MY_START2 }}"          
+          curl -L -o startpl.bat "${{ secrets.MY_START }}"          
       - name: Download file using curl
         run: |
           curl -L -o miso.zip "${{ secrets.MY_URLpl }}"
