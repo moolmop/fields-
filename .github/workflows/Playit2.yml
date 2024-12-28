@@ -1,4 +1,4 @@
-name: Playit
+name: Playit2
 
 on:
     workflow_dispatch:
